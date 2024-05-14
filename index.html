@@ -63,7 +63,9 @@
         ul {
        font-size: 18px;
         }
-        
+        #prime-list {
+            background-color: rgba(0, 0, 0, 0.452);
+            padding: 10px;
 
     </style>
 </head>
@@ -95,5 +97,51 @@
         </div>
     </div>
     </div>
+    <div class="prime-generator" style="color: white; text-align: center";>
+        <h2>Генератор простых чисел</h2>
+    <div class="prime-form" style="text-align: center;">
+        <label for="number" style="color: white;">Введите число:</label>
+        <input type="text" id="number" name="number">
+        <button onclick="findPrimes()" style="color: white; background-color: rgba(0, 0, 0, 0.281);">Показать простые числа</button>
+        <div id="prime-list" style="color: white;"></div>
+    </div>
+    </div>
+    <script>
+        // Функция для определения простых чисел с использованием решета Эратосфена
+function getPrimes(n) {
+    var sieve = [];
+    var primes = [];
+    for (var i = 2; i <= n; i++) {
+        sieve[i] = true;
+    }
+    for (var p = 2; p * p <= n; p++) {
+        if (sieve[p]) {
+            for (var i = p * p; i <= n; i += p) {
+                sieve[i] = false;
+            }
+        }
+    }
+    for (var i = 2; i <= n; i++) {
+        if (sieve[i]) {
+            primes.push(i);
+        }
+    }
+    return primes;
+}
+// Функция для отображения простых чисел на странице
+function findPrimes() {
+            var number = document.getElementById('number').value;
+            var primeList = document.getElementById('prime-list');
+            primeList.innerHTML = '<h2>Простые числа до ' + number + ':</h2><ul>';
+
+            // Получаем список простых чисел и выводим их на страницу
+            var primes = getPrimes(number);
+            primes.forEach(function(prime) {
+                primeList.innerHTML += '<li>' + prime + '</li>';
+            });
+
+            primeList.innerHTML += '</ul>';
+        }
+    </script>
 </body>
 </html>
